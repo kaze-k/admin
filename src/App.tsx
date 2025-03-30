@@ -11,7 +11,7 @@ function App() {
   return (
     <>
       <Helmet>
-        <title>Kanboard Admins</title>
+        <title>Kanboard Admin</title>
         <link
           rel="icon"
           href={Logo}

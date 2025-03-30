@@ -7,6 +7,7 @@ import {
   setProjectAssignee,
   updateProject,
 } from "@/api/services/projects"
+import { getTasks } from "@/api/services/task"
 import {
   DeleteOutlined,
   EditOutlined,
@@ -17,7 +18,7 @@ import {
   WomanOutlined,
 } from "@ant-design/icons"
 import { useMutation, useQuery } from "@tanstack/react-query"
-import { Avatar, Button, Card, Col, Form, Input, List, Modal, Row, Select, Space, Tag, Typography } from "antd"
+import { Avatar, Button, Card, Col, Form, Input, List, Modal, Row, Select, Space, Tag, Tooltip, Typography } from "antd"
 import { isEqual, pickBy } from "lodash"
 import { useEffect, useState } from "react"
 import { useLoaderData, useNavigate } from "react-router"
@@ -31,6 +32,8 @@ function ProjectInfo() {
   const [openAdd, setOpenAdd] = useState(false)
   const [selectedMembers, setSelectedMembers] = useState([])
   const [selectedAssignees, setSelectedAssignees] = useState([])
+  const [taskPage, setTaskPage] = useState(1)
+  const [taskPageSize, setTaskPageSize] = useState(10)
   const navigate = useNavigate()
   const [updateForm] = Form.useForm()
   const [addForm] = Form.useForm()
@@ -45,9 +48,13 @@ function ProjectInfo() {
     setOpen(true)
   }
 
-  const { data: members } = useQuery({
+  const { data: members, refetch } = useQuery({
     queryKey: ["members"],
     queryFn: getMembers,
+  })
+  const { data: tasks } = useQuery({
+    queryKey: ["tasks", project.id, taskPage, taskPageSize],
+    queryFn: () => getTasks(project.id, taskPage, taskPageSize),
   })
 
   const deleteMutation = useMutation({
@@ -130,7 +137,10 @@ function ProjectInfo() {
                 <Col>
                   <Button
                     type="primary"
-                    onClick={() => setOpenAdd(true)}
+                    onClick={() => {
+                      refetch()
+                      setOpenAdd(true)
+                    }}
                   >
                     添加成员
                   </Button>
@@ -234,6 +244,87 @@ function ProjectInfo() {
                     </>
                   }
                 />
+              </List.Item>
+            )}
+          />
+
+          <List
+            pagination={{
+              position: "bottom",
+              align: "center",
+              onChange: (page, pageSize) => {
+                setTaskPage(page)
+                setTaskPageSize(pageSize)
+              },
+              total: tasks?.total,
+              current: taskPage,
+              pageSize: taskPageSize,
+            }}
+            header={
+              <Row justify="center">
+                <Col>
+                  <Text strong>任务列表</Text>
+                </Col>
+              </Row>
+            }
+            bordered
+            dataSource={tasks?.data}
+            itemLayout="horizontal"
+            renderItem={(task: any) => (
+              <List.Item>
+                <Card
+                  style={{ width: "100%" }}
+                  title={task.title}
+                  extra={
+                    <Tag color={task.status === 0 ? "red" : "green"}>{task.status === 0 ? "未完成" : "已完成"}</Tag>
+                  }
+                >
+                  <Space direction="vertical">
+                    <Space>
+                      <Text strong>创建时间:</Text>
+                      {task.created_at}
+                    </Space>
+                    <Space>
+                      <Text strong>更新时间:</Text>
+                      {task.updated_at}
+                    </Space>
+                    <Space>
+                      <Text strong>描述:</Text>
+                      {task.desc}
+                    </Space>
+                    <Space>
+                      <Text strong>截止日期:</Text>
+                      {task.due_date}
+                    </Space>
+                    <Space>
+                      <Text strong>优先级:</Text>
+                      <Tag color={task.priority === 0 ? "blue" : "orange"}>
+                        {task.priority === 0 ? "普通" : "高优先级"}
+                      </Tag>
+                    </Space>
+                    <Space>
+                      <Text strong>任务负责人:</Text>
+                      <Avatar.Group
+                        max={{
+                          count: 5,
+                          popover: {
+                            color: "#00A76F",
+                          },
+                        }}
+                      >
+                        {task.members.map((m: any) => (
+                          <Tooltip
+                            title={m.username}
+                            placement="top"
+                            key={m.user_id}
+                          >
+                            <Avatar icon={<UserOutlined />}></Avatar>
+                          </Tooltip>
+                        ))}
+                      </Avatar.Group>
+                    </Space>
+                  </Space>
+                </Card>
               </List.Item>
             )}
           />

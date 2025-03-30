@@ -32,6 +32,7 @@ function Projects() {
   const [pageSize, setPageSize] = useState(10)
   const [open, setOpen] = useState(false)
   const [selectedMembers, setSelectedMembers] = useState([])
+  const [members, setMembers] = useState([])
   const [selectedAssignees, setSelectedAssignees] = useState([])
   const [form] = Form.useForm()
   const queryClient = useQueryClient()
@@ -46,9 +47,8 @@ function Projects() {
     queryFn: () => getProjects(page, pageSize),
   })
 
-  const { data: members } = useQuery({
-    queryKey: ["members"],
-    queryFn: getMembers,
+  const MemberMutation = useMutation({
+    mutationFn: getMembers,
   })
 
   const createMutation = useMutation({
@@ -90,7 +90,11 @@ function Projects() {
                 justifyContent: "center",
                 alignItems: "center",
               }}
-              onClick={() => setOpen(true)}
+              onClick={async () => {
+                const data = await MemberMutation.mutateAsync()
+                setMembers(data)
+                setOpen(true)
+              }}
             >
               <PlusOutlined style={{ fontSize: "50px" }} />
             </Card>
