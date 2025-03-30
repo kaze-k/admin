@@ -1,6 +1,6 @@
 import Logo from "@/assets/logo.png"
 import { MessageOutlined, PieChartOutlined, ProjectOutlined, UserOutlined } from "@ant-design/icons"
-import { Layout, Menu } from "antd"
+import { Layout, Menu, Tooltip } from "antd"
 import type { MenuProps } from "antd"
 import { useNavigate } from "react-router"
 
@@ -36,15 +36,17 @@ function MainNav() {
         style={{ height: "48px", margin: "16px", cursor: "pointer" }}
         onClick={() => navigate("/")}
       >
-        <img
-          src={Logo}
-          alt="logo"
-          style={{ width: "100%" }}
-        />
+        <Tooltip
+          title="Kanboard Admin"
+          placement="right"
+        >
+          <img
+            src={Logo}
+            alt="logo"
+            style={{ width: "100%" }}
+          />
+        </Tooltip>
       </div>
-      <h1 style={{ color: "#00A76F", textAlign: "center", paddingBottom: "16px", fontWeight: 650, fontSize: "16px" }}>
-        Kanboard Admin
-      </h1>
       <Menu
         theme="light"
         defaultSelectedKeys={["/"]}

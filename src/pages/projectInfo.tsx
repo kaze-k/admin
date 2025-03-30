@@ -281,6 +281,10 @@ function ProjectInfo() {
                 >
                   <Space direction="vertical">
                     <Space>
+                      <Text strong>任务ID:</Text>
+                      {task.id}
+                    </Space>
+                    <Space>
                       <Text strong>创建时间:</Text>
                       {task.created_at}
                     </Space>
