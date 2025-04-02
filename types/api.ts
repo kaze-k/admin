@@ -85,3 +85,12 @@ export interface AddAssigneeRequest {
   members: number[]
   value: boolean
 }
+
+export interface MarkReadRequest {
+  id: number
+  msg_id: number
+}
+
+export interface DeleteMsgRequest {
+  msg_id: string
+}

@@ -4,6 +4,7 @@ import {
   DeleteOutlined,
   EditOutlined,
   PlusOutlined,
+  ProjectTwoTone,
   UserOutlined,
   UsergroupAddOutlined,
 } from "@ant-design/icons"
@@ -73,7 +74,10 @@ function Projects() {
   }, [open, form])
 
   return (
-    <>
+    <div style={{ padding: "20px" }}>
+      <Title level={3}>
+        <ProjectTwoTone /> 项目管理
+      </Title>
       <Card>
         <Row gutter={16}>
           <Col span={6}>
@@ -298,7 +302,7 @@ function Projects() {
           </Form.Item>
         </Form>
       </Modal>
-    </>
+    </div>
   )
 }
 

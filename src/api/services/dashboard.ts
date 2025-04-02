@@ -1,5 +1,13 @@
+import useUserStore from "@/stores/userStore"
+
 import ApiRequest from "../ApiRequest"
 
-export const dashboard = () => ApiRequest.get({ url: "/dashboard" })
+export const dashboard = () => {
+  const id = useUserStore.getState().userInfo.id
+  return ApiRequest.get({ url: `/${id}/dashboard` })
+}
 
-export const getRecentTasks = () => ApiRequest.get({ url: "/getRecentTasks" })
+export const getRecentTasks = () => {
+  const id = useUserStore.getState().userInfo.id
+  return ApiRequest.get({ url: `/${id}/getRecentTasks` })
+}

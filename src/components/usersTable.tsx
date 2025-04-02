@@ -1,13 +1,15 @@
 import { CreateUserRequest, SearchUserRequest, UpdateUserRequest } from "#/api"
 import { createUser, deleteUser, getUsers, searchUsers, updateUser } from "@/api/services/users"
-import { DeleteFilled, EditFilled, MoreOutlined } from "@ant-design/icons"
+import { DeleteFilled, EditFilled, MoreOutlined, UserOutlined } from "@ant-design/icons"
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { Button, Card, Form, Input, InputNumber, Select, Space, Table, Tag, theme } from "antd"
+import { Button, Card, Form, Input, InputNumber, Select, Space, Table, Tag, Typography, theme } from "antd"
 import { useState } from "react"
 import { useNavigate } from "react-router"
 
 import UserCreateModal from "./userCreateModal"
 import UserEditModal from "./userEditModal"
+
+const { Title } = Typography
 
 function UsersTable() {
   const [page, setPage] = useState(1)
@@ -195,8 +197,12 @@ function UsersTable() {
   ]
 
   return (
-    <>
+    <div style={{ padding: "20px" }}>
+      <Title level={3}>
+        <UserOutlined style={{ color: "#1890ff" }} /> 用户管理
+      </Title>
       <Card
+        variant="borderless"
         style={{
           background: colorBgContainer,
           borderRadius: borderRadiusLG,
@@ -217,7 +223,7 @@ function UsersTable() {
             <Form.Item name="id">
               <InputNumber
                 min={1}
-                style={{ width: 100 }}
+                style={{ width: 80 }}
                 placeholder="id"
               />
             </Form.Item>
@@ -313,11 +319,11 @@ function UsersTable() {
         </div>
         <Table
           style={{
-            minHeight: 400,
+            width: "100%",
           }}
           bordered
           size="small"
-          scroll={{ y: 400 }}
+          scroll={{ y: 500 }}
           rowKey="id"
           loading={isLoading}
           dataSource={userData?.data}
@@ -348,7 +354,7 @@ function UsersTable() {
         onOk={handleCreateOk}
         onCancel={handleCreateCancel}
       />
-    </>
+    </div>
   )
 }
 

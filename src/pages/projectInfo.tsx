@@ -113,7 +113,7 @@ function ProjectInfo() {
           style={{ width: "100%" }}
           direction="vertical"
         >
-          <Card>
+          <Card variant="borderless">
             <Space direction="vertical">
               <Text strong>描述: </Text>
               <Text>{data.desc ? data.desc : "无"}</Text>
@@ -273,6 +273,7 @@ function ProjectInfo() {
             renderItem={(task: any) => (
               <List.Item>
                 <Card
+                  variant="borderless"
                   style={{ width: "100%" }}
                   title={task.title}
                   extra={

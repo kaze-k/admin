@@ -142,7 +142,7 @@ function Dashboard() {
 
   return (
     <div style={{ padding: "20px" }}>
-      <Title level={2}>
+      <Title level={3}>
         <PieChartTwoTone /> 数据概览
       </Title>
 
