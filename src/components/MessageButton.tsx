@@ -102,10 +102,6 @@ function MessageButton() {
     })
   }
 
-  useEffect(() => {
-    openNotification()
-  }, [msgObj])
-
   const handleClick = async () => {
     if (open) setOpen(false)
     else setOpen(true)
@@ -124,6 +120,21 @@ function MessageButton() {
   const getReadedMsgMutation = useMutation({
     mutationFn: getReadedMsgs,
   })
+
+  useEffect(() => {
+    openNotification()
+    getUnReadMsgMutation.mutate(undefined, {
+      onSuccess: (unreadMsgData) => {
+        setUnreadMsg(unreadMsgData)
+      },
+    })
+
+    getReadedMsgMutation.mutateAsync(undefined, {
+      onSuccess(readedMsgData) {
+        setReadedMsg(readedMsgData)
+      },
+    })
+  }, [msgObj])
 
   const markReadedMutation = useMutation({
     mutationFn: markReadMsgs,
