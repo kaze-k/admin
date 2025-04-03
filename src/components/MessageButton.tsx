@@ -1,9 +1,9 @@
 import { getReadedMsgs, getUnReadMsgs, markReadMsgs } from "@/api/services/message"
 import { useMsg } from "@/api/services/websocket"
 import useUserStore from "@/stores/userStore"
-import { BellFilled } from "@ant-design/icons"
+import { BellFilled, CheckCircleOutlined } from "@ant-design/icons"
 import { useMutation } from "@tanstack/react-query"
-import { Badge, Button, Card, Col, Drawer, Row, Space, Tabs, TabsProps, notification } from "antd"
+import { Badge, Button, Card, Col, Drawer, Row, Space, Tabs, TabsProps, Tag, Tooltip, notification } from "antd"
 import { useEffect, useState } from "react"
 
 interface MsgType {
@@ -12,7 +12,7 @@ interface MsgType {
   payload: any
 }
 
-function MessageCard({ message, onClick, dot }: any) {
+function MessageCard({ message, created_at, onClick, dot }: any) {
   if (!onClick)
     return (
       <Badge styles={{ root: { width: "100%" } }}>
@@ -30,6 +30,14 @@ function MessageCard({ message, onClick, dot }: any) {
                   <Space>
                     <BellFilled />
                     消息
+                  </Space>
+                </Col>
+                <Col
+                  span={14}
+                  style={{ display: "flex", justifyContent: "flex-start", alignContent: "center", textAlign: "left" }}
+                >
+                  <Space>
+                    <Tag color="blue">{created_at}</Tag>
                   </Space>
                 </Col>
               </Row>
@@ -65,14 +73,27 @@ function MessageCard({ message, onClick, dot }: any) {
             </Col>
             <Col
               span={10}
+              style={{ display: "flex", justifyContent: "center", alignContent: "center", textAlign: "center" }}
+            >
+              <Space>
+                <Tag color="blue">{created_at}</Tag>
+              </Space>
+            </Col>
+            <Col
+              span={4}
               style={{ display: "flex", justifyContent: "flex-end", alignContent: "center", textAlign: "right" }}
             >
-              <Button
-                type="primary"
-                onClick={onClick}
+              <Tooltip
+                placement="top"
+                title="标记为已读"
               >
-                标记为已读
-              </Button>
+                <Button
+                  type="primary"
+                  shape="circle"
+                  onClick={onClick}
+                  icon={<CheckCircleOutlined />}
+                />
+              </Tooltip>
             </Col>
           </Row>
         }
@@ -168,12 +189,8 @@ function MessageButton() {
             <MessageCard
               dot
               key={message.id}
-              message={
-                <>
-                  <p>[{message.created_at}]</p>
-                  <p>{message.content}</p>
-                </>
-              }
+              message={message.content}
+              created_at={message.created_at}
               onClick={() => {
                 const id = useUserStore.getState().userInfo.id
                 if (id) {
@@ -196,12 +213,8 @@ function MessageButton() {
           {readedMsg.reverse().map((message: any) => (
             <MessageCard
               key={message.id}
-              message={
-                <>
-                  <p>[{message.created_at}]</p>
-                  <p>{message.content}</p>
-                </>
-              }
+              message={message.content}
+              created_at={message.created_at}
             />
           ))}
         </Space>
