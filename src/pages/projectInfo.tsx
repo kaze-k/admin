@@ -149,7 +149,7 @@ function ProjectInfo() {
               </Row>
             }
             bordered
-            dataSource={data.members}
+            dataSource={data?.members || []}
             itemLayout="horizontal"
             renderItem={(member: any) => (
               <List.Item
@@ -161,7 +161,7 @@ function ProjectInfo() {
                       removeMemberMutation.mutate(
                         {
                           project_id: project.id,
-                          members: [member.id],
+                          members: [member?.id],
                         },
                         {
                           onSuccess: async () => {
@@ -180,7 +180,7 @@ function ProjectInfo() {
                   >
                     查看
                   </Button>,
-                  !member.assignee ? (
+                  !member?.assignee ? (
                     <Button
                       onClick={() =>
                         assigneeMutation.mutate(
@@ -224,7 +224,7 @@ function ProjectInfo() {
                   }
                   title={
                     <Space>
-                      <Text>{member.username}</Text>
+                      <Text>{member?.username}</Text>
                       <div>
                         {member.gender === 1 && (
                           <Tag
@@ -232,21 +232,21 @@ function ProjectInfo() {
                             icon={<ManOutlined />}
                           />
                         )}
-                        {member.gender === 2 && (
+                        {member?.gender === 2 && (
                           <Tag
                             color="#f50"
                             icon={<WomanOutlined />}
                           />
                         )}
-                        {member.position && <Tag color="blue">{member.position}</Tag>}
-                        {member.assignee && <Tag color="green">项目负责人</Tag>}
+                        {member?.position && <Tag color="blue">{member?.position}</Tag>}
+                        {member?.assignee && <Tag color="green">项目负责人</Tag>}
                       </div>
                     </Space>
                   }
                   description={
                     <>
-                      {member.email && <Tag icon={<MailOutlined />}>{member.email}</Tag>}
-                      {member.mobile && <Tag icon={<PhoneOutlined />}>{member.mobile}</Tag>}
+                      {member?.email && <Tag icon={<MailOutlined />}>{member?.email}</Tag>}
+                      {member?.mobile && <Tag icon={<PhoneOutlined />}>{member?.mobile}</Tag>}
                     </>
                   }
                 />
@@ -323,7 +323,7 @@ function ProjectInfo() {
                           },
                         }}
                       >
-                        {task.members.map((m: any) => (
+                        {task.members?.map((m: any) => (
                           <Tooltip
                             title={m.username}
                             placement="top"
@@ -415,17 +415,17 @@ function ProjectInfo() {
               showSearch
               optionFilterProp="label"
               onChange={(selectedValues) => {
-                const selectedObjects = members.filter((member: any) => selectedValues.includes(member.user_id))
+                const selectedObjects = members?.filter((member: any) => selectedValues.includes(member.user_id))
                 setSelectedAssignees(selectedObjects)
               }}
             >
               {members?.map((member: any) => (
                 <Select.Option
-                  key={member.user_id}
-                  value={member.user_id}
-                  label={member.username}
+                  key={member?.user_id}
+                  value={member?.user_id}
+                  label={member?.username}
                 >
-                  {member.username}
+                  {member?.username}
                 </Select.Option>
               ))}
             </Select>
@@ -439,17 +439,17 @@ function ProjectInfo() {
               showSearch
               optionFilterProp="label"
               onChange={(selectedValues) => {
-                const selectedObjects = members.filter((member: any) => selectedValues.includes(member.user_id))
+                const selectedObjects = members?.filter((member: any) => selectedValues.includes(member.user_id))
                 setSelectedMembers(selectedObjects)
               }}
             >
               {members?.map((member: any) => (
                 <Select.Option
-                  key={member.user_id}
-                  value={member.user_id}
-                  label={member.username}
+                  key={member?.user_id}
+                  value={member?.user_id}
+                  label={member?.username}
                 >
-                  {member.username}
+                  {member?.username}
                 </Select.Option>
               ))}
             </Select>
