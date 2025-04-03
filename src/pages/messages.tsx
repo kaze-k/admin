@@ -94,7 +94,7 @@ function Messages() {
           style={{ width: "100%" }}
           scroll={{ y: 500 }}
           columns={columns}
-          dataSource={data}
+          dataSource={data?.reverse()}
           pagination={{
             position: ["bottomCenter"],
             showTitle: true,

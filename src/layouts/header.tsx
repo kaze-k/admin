@@ -7,6 +7,7 @@ import { MessageOutlined, PieChartOutlined, ProjectOutlined, UserOutlined } from
 import { useMutation } from "@tanstack/react-query"
 import { Breadcrumb, Layout, Space, theme } from "antd"
 import { BreadcrumbItemType } from "antd/es/breadcrumb/Breadcrumb"
+import { useEffect } from "react"
 import { useMatches } from "react-router"
 
 const { Header } = Layout
@@ -71,10 +72,14 @@ function MainHeader() {
     retry: false,
   })
 
-  setInterval(async () => {
-    const data = await getUserMutation.mutateAsync()
-    setUserInfo(data)
-  }, 1000 * 60)
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      const data = await getUserMutation.mutateAsync()
+      setUserInfo(data)
+    }, 1000 * 60)
+
+    return () => clearInterval(interval)
+  }, [])
 
   return (
     <Header

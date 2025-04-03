@@ -1,5 +1,6 @@
 import { ChangePasswordRequest, UpdateUserRequest } from "#/api"
 import { changePassword, deleteUser, getUser, updateUser, uploadAvatar } from "@/api/services/users"
+import { useAction, useUserInfo } from "@/stores/userStore"
 import { computeFileMD5 } from "@/utils/md5"
 import { avatarPath } from "@/utils/resources"
 import { UserOutlined } from "@ant-design/icons"
@@ -47,6 +48,8 @@ function UserInfoForm() {
   }, [user])
 
   const [form] = Form.useForm()
+  const { id } = useUserInfo()
+  const { setUserInfo } = useAction()
 
   const UpdateUserMutation = useMutation({
     mutationFn: updateUser,
@@ -54,6 +57,9 @@ function UserInfoForm() {
       const newData = await getUser(user.id)
       form.setFieldsValue(newData)
       setData({ ...newData, avatar: avatarPath(newData.avatar) })
+      if (user.id === id) {
+        setUserInfo(newData)
+      }
     },
     onError: () => {
       form.setFieldsValue(data)

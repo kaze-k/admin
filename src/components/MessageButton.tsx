@@ -153,11 +153,16 @@ function MessageButton() {
           direction="vertical"
           style={{ width: "100%" }}
         >
-          {unreadMsg.reverse().map((message: { id: number; content: string }) => (
+          {unreadMsg.reverse().map((message: { id: number; content: string; created_at: string }) => (
             <MessageCard
               dot
               key={message.id}
-              message={message.content}
+              message={
+                <>
+                  <p>[{message.created_at}]</p>
+                  <p>{message.content}</p>
+                </>
+              }
               onClick={() => {
                 const id = useUserStore.getState().userInfo.id
                 if (id) {
@@ -180,7 +185,12 @@ function MessageButton() {
           {readedMsg.reverse().map((message: any) => (
             <MessageCard
               key={message.id}
-              message={message.content}
+              message={
+                <>
+                  <p>[{message.created_at}]</p>
+                  <p>{message.content}</p>
+                </>
+              }
             />
           ))}
         </Space>
