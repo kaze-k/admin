@@ -23,7 +23,7 @@ export const deleteMsg = (data: DeleteMsgRequest) => {
   return ApiRequest.delete({ url: `/${id}/deleteMsg`, data })
 }
 
-export const getAllMsgs = (count: number) => {
+export const getAllMsgs = () => {
   const id = useUserStore.getState().userInfo.id
-  return ApiRequest.get({ url: `/${id}/getAllMsgs?count=${count}` })
+  return ApiRequest.get({ url: `/${id}/getAllMsgs` })
 }

@@ -12,8 +12,8 @@ function Messages() {
   const [page, setPage] = useState(1)
 
   const { data, refetch } = useQuery({
-    queryKey: ["messages", count],
-    queryFn: () => getAllMsgs(count),
+    queryKey: ["messages"],
+    queryFn: getAllMsgs,
   })
 
   const deleteMsgMutation = useMutation({
@@ -94,7 +94,7 @@ function Messages() {
           style={{ width: "100%" }}
           scroll={{ y: 500 }}
           columns={columns}
-          dataSource={data?.reverse()}
+          dataSource={data}
           pagination={{
             position: ["bottomCenter"],
             showTitle: true,
