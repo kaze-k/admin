@@ -8,6 +8,7 @@ import {
   updateProject,
 } from "@/api/services/projects"
 import { getTasks } from "@/api/services/task"
+import { avatarPath } from "@/utils/resources"
 import {
   DeleteOutlined,
   EditOutlined,
@@ -215,7 +216,12 @@ function ProjectInfo() {
                 ]}
               >
                 <List.Item.Meta
-                  avatar={<Avatar icon={<UserOutlined />} />}
+                  avatar={
+                    <Avatar
+                      icon={member?.avatar ? null : <UserOutlined />}
+                      src={avatarPath(member?.avatar) || undefined}
+                    />
+                  }
                   title={
                     <Space>
                       <Text>{member.username}</Text>
@@ -323,7 +329,10 @@ function ProjectInfo() {
                             placement="top"
                             key={m.user_id}
                           >
-                            <Avatar icon={<UserOutlined />}></Avatar>
+                            <Avatar
+                              icon={m?.avatar ? null : <UserOutlined />}
+                              src={avatarPath(m.avatar) || undefined}
+                            ></Avatar>
                           </Tooltip>
                         ))}
                       </Avatar.Group>

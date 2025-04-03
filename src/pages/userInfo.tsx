@@ -1,8 +1,25 @@
 import { ChangePasswordRequest, UpdateUserRequest } from "#/api"
-import { changePassword, deleteUser, getUser, updateUser } from "@/api/services/users"
+import { changePassword, deleteUser, getUser, updateUser, uploadAvatar } from "@/api/services/users"
+import { computeFileMD5 } from "@/utils/md5"
+import { avatarPath } from "@/utils/resources"
 import { UserOutlined } from "@ant-design/icons"
 import { useMutation } from "@tanstack/react-query"
-import { Avatar, Button, Card, Col, Form, Input, Row, Select, Space, Tabs, Typography } from "antd"
+import {
+  Avatar,
+  Button,
+  Card,
+  Col,
+  Form,
+  GetProp,
+  Input,
+  Row,
+  Select,
+  Space,
+  Tabs,
+  Typography,
+  Upload,
+  UploadProps,
+} from "antd"
 import { TabsProps } from "antd/lib"
 import { isEqual, pickBy } from "lodash"
 import { useEffect, useState } from "react"
@@ -14,6 +31,7 @@ const { Text } = Typography
 function UserInfoForm() {
   const user = useLoaderData()
   const initData: any = {
+    avatar: avatarPath(user.avatar),
     email: user.email,
     mobile: user.mobile,
     position: user.position,
@@ -23,6 +41,10 @@ function UserInfoForm() {
   }
   const [data, setData] = useState(initData)
   const navigate = useNavigate()
+  useEffect(() => {
+    setData(initData)
+    form.setFieldsValue(initData)
+  }, [user])
 
   const [form] = Form.useForm()
 
@@ -31,7 +53,7 @@ function UserInfoForm() {
     onSuccess: async () => {
       const newData = await getUser(user.id)
       form.setFieldsValue(newData)
-      setData(newData)
+      setData({ ...newData, avatar: avatarPath(newData.avatar) })
     },
     onError: () => {
       form.setFieldsValue(data)
@@ -72,6 +94,42 @@ function UserInfoForm() {
     deleteMutation.mutate(user.id)
   }
 
+  const handleUpload = (file: Parameters<GetProp<UploadProps, "beforeUpload">>[0]) => {
+    const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png"
+    if (!isJpgOrPng) {
+      toast.error("上传文件只能是 JPG/PNG 格式!", {
+        position: "top-center",
+      })
+    }
+    const isLt2M = file.size / 1024 / 1024 < 2
+    if (!isLt2M) {
+      toast.error("上传文件大小不能?超过 2MB!", {
+        position: "top-center",
+      })
+    }
+    return isJpgOrPng && isLt2M
+  }
+
+  const handleRequest = async (options: any) => {
+    const { file, onSuccess, onError } = options
+
+    try {
+      const md5 = await computeFileMD5(file)
+
+      const formData = new FormData()
+      formData.append("file", file)
+      formData.append("md5", md5)
+
+      const result = await uploadAvatar(formData)
+
+      const data = await UpdateUserMutation.mutateAsync({ id: user.id, avatar: result })
+      setData({ ...data, avatar: avatarPath(data?.avatar) })
+      onSuccess(result)
+    } catch (error) {
+      onError(error)
+    }
+  }
+
   return (
     <Row gutter={[16, 16]}>
       <Col
@@ -94,10 +152,20 @@ function UserInfoForm() {
             size="large"
             align="center"
           >
-            <Avatar
-              size={100}
-              icon={<UserOutlined />}
-            />
+            <Upload
+              customRequest={handleRequest}
+              name="file"
+              multiple
+              listType="picture-circle"
+              beforeUpload={handleUpload}
+              showUploadList={false}
+            >
+              <Avatar
+                size={100}
+                icon={data?.avatar ? null : <UserOutlined />}
+                src={data?.avatar || undefined}
+              />
+            </Upload>
             <Text strong>{user.username}</Text>
             <Button
               type="primary"

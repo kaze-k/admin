@@ -1,4 +1,5 @@
 import { createProject, deleteProject, getMembers, getProjects } from "@/api/services/projects"
+import { avatarPath } from "@/utils/resources"
 import {
   ClockCircleOutlined,
   DeleteOutlined,
@@ -187,8 +188,8 @@ function Projects() {
                           key={member.user_id}
                         >
                           <Avatar
-                            icon={<UserOutlined />}
-                            src={member.avatar}
+                            icon={member?.avatar ? null : <UserOutlined />}
+                            src={avatarPath(member?.avatar) || undefined}
                           />
                         </Tooltip>
                       ))}

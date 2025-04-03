@@ -1,7 +1,10 @@
+import { getUser } from "@/api/services/users"
 import AccountDropdown from "@/components/AccountDropdown"
 import FullscreenButton from "@/components/FullscreenButton"
 import MessageButton from "@/components/MessageButton"
+import { useAction, useUserInfo } from "@/stores/userStore"
 import { MessageOutlined, PieChartOutlined, ProjectOutlined, UserOutlined } from "@ant-design/icons"
+import { useMutation } from "@tanstack/react-query"
 import { Breadcrumb, Layout, Space, theme } from "antd"
 import { BreadcrumbItemType } from "antd/es/breadcrumb/Breadcrumb"
 import { useMatches } from "react-router"
@@ -36,6 +39,8 @@ function MainHeader() {
   const {
     token: { colorBgContainer },
   } = theme.useToken()
+  const { id }: any = useUserInfo()
+  const { setUserInfo } = useAction()
 
   const breadcrumbItems = (): BreadcrumbItemType[] => {
     const basePath = `/${matches[1].pathname.split("/")[1]}`
@@ -60,6 +65,16 @@ function MainHeader() {
 
     return bitems
   }
+
+  const getUserMutation = useMutation({
+    mutationFn: () => getUser(id),
+    retry: false,
+  })
+
+  setInterval(async () => {
+    const data = await getUserMutation.mutateAsync()
+    setUserInfo(data)
+  }, 1000 * 60)
 
   return (
     <Header

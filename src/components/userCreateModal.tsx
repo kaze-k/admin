@@ -7,6 +7,7 @@ type ModalProps = {
   onCancel?: () => void
   confirmLoading?: boolean
 }
+
 function UserCreateModal({ open, onOk, onCancel, confirmLoading }: ModalProps) {
   const { useForm } = Form
   const [form] = useForm()

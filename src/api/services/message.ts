@@ -25,5 +25,5 @@ export const deleteMsg = (data: DeleteMsgRequest) => {
 
 export const getAllMsgs = (count: number) => {
   const id = useUserStore.getState().userInfo.id
-  return ApiRequest.get({url: `/${id}/getAllMsgs?count=${count}`})
+  return ApiRequest.get({ url: `/${id}/getAllMsgs?count=${count}` })
 }

@@ -27,6 +27,11 @@ export const updateUser = (data: UpdateUserRequest) => {
   return ApiRequest.put({ url: `/${id}/updateUser`, data })
 }
 
+export const uploadAvatar = (data: FormData) => {
+  const id = useUserStore.getState().userInfo.id
+  return ApiRequest.post({ url: `/${id}/uploadAvatar`, data, headers: { "Content-Type": "multipart/form-data" } })
+}
+
 export const createUser = (data: CreateUserRequest) => {
   const id = useUserStore.getState().userInfo.id
   return ApiRequest.post({ url: `/${id}/createUser`, data })

@@ -1,4 +1,5 @@
 import { useAction, useUserInfo } from "@/stores/userStore"
+import { avatarPath } from "@/utils/resources"
 import { UserOutlined } from "@ant-design/icons"
 import { Avatar, Button, Divider, type MenuProps } from "antd"
 import Dropdown, { type DropdownProps } from "antd/es/dropdown/dropdown"
@@ -11,7 +12,7 @@ import { NavLink, useNavigate } from "react-router"
 function AccountDropdown() {
   const { clearUserToken } = useAction()
   const navigate = useNavigate()
-  const { username, id } = useUserInfo()
+  const { username, id, avatar }: any = useUserInfo()
 
   const logout = () => {
     clearUserToken()
@@ -50,7 +51,10 @@ function AccountDropdown() {
       dropdownRender={dropdownRender}
     >
       <span style={{ display: "flex", height: 32, justifyContent: "center", alignItems: "center", cursor: "pointer" }}>
-        <Avatar icon={<UserOutlined />} />
+        <Avatar
+          icon={avatarPath(avatar) ? null : <UserOutlined />}
+          src={avatarPath(avatar) || undefined}
+        />
         <span style={{ padding: "0 10px", fontSize: 16, fontWeight: 600 }}>{username}</span>
       </span>
     </Dropdown>

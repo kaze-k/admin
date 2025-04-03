@@ -1,4 +1,5 @@
 import { deleteMsg, getAllMsgs } from "@/api/services/message"
+import { avatarPath } from "@/utils/resources"
 import { DeleteFilled, MessageTwoTone, UserOutlined } from "@ant-design/icons"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { Avatar, Button, Card, Table, Tag, Tooltip, Typography } from "antd"
@@ -54,7 +55,10 @@ function Messages() {
                 key={item.user_id}
                 title={item.username}
               >
-                <Avatar icon={<UserOutlined />} />
+                <Avatar
+                  icon={item?.avatar ? null : <UserOutlined />}
+                  src={avatarPath(item?.avatar) || undefined}
+                />
               </Tooltip>
             ))}
           </Avatar.Group>
