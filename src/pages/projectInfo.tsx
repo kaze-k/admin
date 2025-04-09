@@ -314,6 +314,18 @@ function ProjectInfo() {
                       </Tag>
                     </Space>
                     <Space>
+                      <Text strong>任务创建者:</Text>
+                      <Tooltip
+                        title={task.creator.username}
+                        placement="top"
+                      >
+                        <Avatar
+                          icon={task.creator?.avatar ? null : <UserOutlined />}
+                          src={avatarPath(task.creator?.avatar) || undefined}
+                        ></Avatar>
+                      </Tooltip>
+                    </Space>
+                    <Space>
                       <Text strong>任务负责人:</Text>
                       <Avatar.Group
                         max={{

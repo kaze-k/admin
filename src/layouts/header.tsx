@@ -103,7 +103,7 @@ function MainHeader() {
           <FullscreenButton />
           <MessageButton />
         </Space>
-        <div style={{ width: 2, height: 20, background: "#ccc", margin: "0 10px" }} />
+        <div style={{ width: 2, height: 20, margin: "0 10px" }} />
         <AccountDropdown />
       </div>
     </Header>

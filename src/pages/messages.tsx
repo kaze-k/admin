@@ -90,9 +90,9 @@ function Messages() {
       </Title>
       <Card>
         <Table
+          size="small"
           rowKey="id"
           style={{ width: "100%" }}
-          scroll={{ y: 500 }}
           columns={columns}
           dataSource={data}
           pagination={{

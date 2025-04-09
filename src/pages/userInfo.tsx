@@ -161,7 +161,6 @@ function UserInfoForm() {
             <Upload
               customRequest={handleRequest}
               name="file"
-              multiple
               listType="picture-circle"
               beforeUpload={handleUpload}
               showUploadList={false}

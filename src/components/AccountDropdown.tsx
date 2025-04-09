@@ -50,7 +50,7 @@ function AccountDropdown() {
       trigger={["click"]}
       dropdownRender={dropdownRender}
     >
-      <span style={{ display: "flex", height: 32, justifyContent: "center", alignItems: "center", cursor: "pointer" }}>
+      <span style={{ display: "flex", height: 50, justifyContent: "center", alignItems: "center", cursor: "pointer" }}>
         <Avatar
           icon={avatarPath(avatar) ? null : <UserOutlined />}
           src={avatarPath(avatar) || undefined}

@@ -1,7 +1,7 @@
 import { LoginRequest } from "#/api"
 import { captcha } from "@/api/services/users"
 import { useLogin } from "@/stores/userStore"
-import { EyeInvisibleOutlined, UserOutlined } from "@ant-design/icons"
+import { LockOutlined, UserOutlined } from "@ant-design/icons"
 import { useQuery } from "@tanstack/react-query"
 import { Button, Card, Col, Form, Input, Row } from "antd"
 import { useState } from "react"
@@ -70,7 +70,7 @@ function LoginForm() {
             size="large"
             type="password"
             placeholder={"密码"}
-            prefix={<EyeInvisibleOutlined />}
+            prefix={<LockOutlined />}
           />
         </Form.Item>
         <Form.Item
