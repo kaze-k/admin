@@ -40,7 +40,10 @@ function UserCreateModal({ open, onOk, onCancel, confirmLoading }: ModalProps) {
         </Form.Item>
         <Form.Item
           label="密码"
-          rules={[{ required: true, message: "请输入密码" }]}
+          rules={[
+            { required: true, message: "请输入密码" },
+            { min: 4, message: "密码至少4位" },
+          ]}
           name="password"
         >
           <Input.Password allowClear />
@@ -52,6 +55,13 @@ function UserCreateModal({ open, onOk, onCancel, confirmLoading }: ModalProps) {
           <Input allowClear />
         </Form.Item>
         <Form.Item
+          rules={[
+            {
+              message: "请输入手机号",
+
+              pattern: /^1[3-9]\d{9}$/,
+            },
+          ]}
           label="手机号"
           name="mobile"
         >

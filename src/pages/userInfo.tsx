@@ -198,6 +198,12 @@ function UserInfoForm() {
             <Row gutter={16}>
               <Col span={6}>
                 <Form.Item
+                  rules={[
+                    {
+                      message: "请输入正确的邮箱!",
+                      type: "email",
+                    }
+                  ]}
                   label="邮箱"
                   name="email"
                 >
@@ -207,7 +213,13 @@ function UserInfoForm() {
 
               <Col span={6}>
                 <Form.Item
-                  label="电话"
+                  rules={[
+                    {
+                      message: "请输入正确的手机号!",
+                      pattern: /^1[3-9]\d{9}$/,
+                    }
+                  ]}
+                  label="手机号"
                   name="mobile"
                 >
                   <Input />
@@ -330,14 +342,14 @@ function UserChangePassword() {
         <Form.Item
           name="newPassword"
           label="新密码"
-          rules={[{ required: true, message: "请输入新密码" }]}
+          rules={[{ required: true, message: "请输入新密码" }, { min: 4, message: "密码长度至少为4位" }]}
         >
           <Input.Password placeholder="请输入新密码" />
         </Form.Item>
         <Form.Item
           name="confirmPassword"
           label="再次输入新密码"
-          rules={[{ required: true, message: "请再次输入新密码" }]}
+          rules={[{ required: true, message: "请再次输入新密码" }, { min: 4, message: "密码长度至少为4位" }]}
         >
           <Input.Password placeholder="请再次输入新密码" />
         </Form.Item>

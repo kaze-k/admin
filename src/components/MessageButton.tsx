@@ -185,7 +185,7 @@ function MessageButton() {
           direction="vertical"
           style={{ width: "100%" }}
         >
-          {unreadMsg.reverse().map((message: { id: number; content: string; created_at: string }) => (
+          {unreadMsg.map((message: { id: number; content: string; created_at: string }) => (
             <MessageCard
               dot
               key={message.id}
@@ -210,7 +210,7 @@ function MessageButton() {
           direction="vertical"
           style={{ width: "100%" }}
         >
-          {readedMsg.reverse().map((message: any) => (
+          {readedMsg.map((message: any) => (
             <MessageCard
               key={message.id}
               message={message.content}
