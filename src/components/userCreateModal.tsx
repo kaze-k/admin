@@ -51,6 +51,9 @@ function UserCreateModal({ open, onOk, onCancel, confirmLoading }: ModalProps) {
         <Form.Item
           label="邮箱"
           name="email"
+          rules={[
+            { message: "请输入邮箱", type: "email" },
+          ]}
         >
           <Input allowClear />
         </Form.Item>
