@@ -223,27 +223,27 @@ function UsersTable() {
             <Form.Item name="id">
               <InputNumber
                 min={1}
-                style={{ width: 80 }}
+                style={{ width: 80, marginBottom: 10 }}
                 placeholder="id"
               />
             </Form.Item>
             <Form.Item name="username">
               <Input
-                style={{ width: 200 }}
+                style={{ width: 200, marginBottom: 10 }}
                 allowClear
                 placeholder="用户名"
               />
             </Form.Item>
             <Form.Item name="position">
               <Input
-                style={{ width: 200 }}
+                style={{ width: 200, marginBottom: 10 }}
                 allowClear
                 placeholder="职位"
               />
             </Form.Item>
             <Form.Item name="gender">
               <Select
-                style={{ width: 100 }}
+                style={{ width: 100, marginBottom: 10 }}
                 showSearch
                 allowClear
                 placeholder="性别"
@@ -256,7 +256,7 @@ function UsersTable() {
             </Form.Item>
             <Form.Item name="create_from">
               <Select
-                style={{ width: 150 }}
+                style={{ width: 150, marginBottom: 10 }}
                 showSearch
                 allowClear
                 placeholder="账号来源"
@@ -269,7 +269,7 @@ function UsersTable() {
             </Form.Item>
             <Form.Item name="loginable">
               <Select
-                style={{ width: 120 }}
+                style={{ width: 120, marginBottom: 10 }}
                 showSearch
                 allowClear
                 placeholder="是否可登录"
@@ -282,7 +282,7 @@ function UsersTable() {
             </Form.Item>
             <Form.Item name="is_admin">
               <Select
-                style={{ width: 120 }}
+                style={{ width: 120, marginBottom: 10 }}
                 showSearch
                 allowClear
                 placeholder="是否管理员"

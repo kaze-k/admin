@@ -1,0 +1,33 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "admin",
+  "version": "0.1.0",
+  "identifier": "org.kaze.admin",
+  "build": {
+    "frontendDist": "../dist-tauri",
+    "devUrl": "http://localhost:5173"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "admin",
+        "width": 1420,
+        "height": 720,
+        "minWidth": 1420,
+        "minHeight": 720,
+        "resizable": true,
+        "fullscreen": false
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/icon.ico"
+    ]
+  }
+}

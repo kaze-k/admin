@@ -2,6 +2,7 @@ import { getUser } from "@/api/services/users"
 import AccountDropdown from "@/components/AccountDropdown"
 import FullscreenButton from "@/components/FullscreenButton"
 import MessageButton from "@/components/MessageButton"
+import { useIsTauri } from "@/hooks"
 import { useAction, useUserInfo } from "@/stores/userStore"
 import { MessageOutlined, PieChartOutlined, ProjectOutlined, UserOutlined } from "@ant-design/icons"
 import { useMutation } from "@tanstack/react-query"
@@ -36,6 +37,7 @@ function getTitle(pathname: string, item: string) {
 }
 
 function MainHeader() {
+  const { isTauri, isReady } = useIsTauri()
   const matches = useMatches()
   const {
     token: { colorBgContainer },
@@ -100,7 +102,7 @@ function MainHeader() {
       <Breadcrumb items={breadcrumbItems()} />
       <div style={{ display: "flex", alignItems: "center" }}>
         <Space>
-          <FullscreenButton />
+          {!isTauri && isReady && <FullscreenButton />}
           <MessageButton />
         </Space>
         <div style={{ width: 2, height: 20, margin: "0 10px" }} />

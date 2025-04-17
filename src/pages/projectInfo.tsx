@@ -299,10 +299,10 @@ function ProjectInfo() {
                       <Text strong>更新时间:</Text>
                       {task.updated_at}
                     </Space>
-                    <Space>
-                      <Text strong>描述:</Text>
-                      {task.desc}
-                    </Space>
+                    {/* <Space> */}
+                    {/*   <Text strong>描述:</Text> */}
+                    {/*   {task.desc} */}
+                    {/* </Space> */}
                     <Space>
                       <Text strong>截止日期:</Text>
                       {task.due_date}
