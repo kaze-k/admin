@@ -3,6 +3,7 @@ import { getUser } from "@/api/services/users"
 import UsersTable from "@/components/usersTable"
 import Main from "@/layouts"
 import Dashboard from "@/pages/dashboard"
+import ErrorPage from "@/pages/errorPage"
 import Login from "@/pages/login"
 import Messages from "@/pages/messages"
 import Page404 from "@/pages/page404"
@@ -73,6 +74,7 @@ const children = [
 const router = createBrowserRouter([
   {
     path: "/",
+    ErrorBoundary: ErrorPage,
     Component: Main,
     children: children,
     loader: async () => {
