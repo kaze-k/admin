@@ -11,7 +11,7 @@ function Messages() {
   const [count, setCount] = useState(10)
   const [page, setPage] = useState(1)
 
-  const { data, refetch } = useQuery({
+  const { data, refetch, isLoading, isFetching } = useQuery({
     queryKey: ["messages"],
     queryFn: getAllMsgs,
   })
@@ -90,6 +90,7 @@ function Messages() {
       </Title>
       <Card>
         <Table
+          loading={isLoading || isFetching}
           size="small"
           rowKey="id"
           style={{ width: "100%" }}
